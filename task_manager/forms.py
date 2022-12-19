@@ -1,35 +1,27 @@
 from django.contrib.auth.models import User
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
 
 
 class RegisterUserForm(forms.ModelForm):
     # Прописываем поля для нашей регистрации
     first_name = forms.CharField(max_length=150,
-                                 label='Имя',
-                                 widget=forms.TextInput(attrs={'class': 'form-control',
-                                                               'placeholder': 'Имя',
-                                                               }))
+                                 label='Имя',)
     last_name = forms.CharField(max_length=150,
-                                label='Фамилия',
-                                widget=forms.TextInput(attrs={'class': 'form-control',
-                                                              'placeholder': 'Фамилия',
-                                                              }))
+                                label='Фамилия',)
     username = forms.CharField(max_length=150,
-                               label='Имя пользователя',
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': 'Имя пользователя',
-                                                             'title': 'Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.'
-                                                             }))
-    password1 = forms.CharField(min_length=3,
-                                label='Пароль',
-                                widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                  'placeholder': 'Пароль',
-                                                                  }))
-    password2 = forms.CharField(min_length=3,
-                                label='Подтверждение пароля',
-                                widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                  'placeholder': 'Подтверждение пароля',
-                                                                  }))
+                               label='Имя пользователя',)
+    password1 = forms.CharField(label='Пароль',)
+    password2 = forms.CharField(label='Подтверждение пароля',)
+    class Meta:
+        # Для сохранения в таблицу USER используем модель User
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'password1', 'password2')
+
+
+class UpdateUserForm(forms.ModelForm):
+    password1 = forms.CharField(label='Пароль',)
+    password2 = forms.CharField(label='Подтверждение пароля',)
     class Meta:
         # Для сохранения в таблицу USER используем модель User
         model = User

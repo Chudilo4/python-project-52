@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 {% block content %}
 <div class="container wrapper flex-grow-1">
 <h1 class="my-4">Регистрация</h1>
 <form method="post">
     {% csrf_token %}
-    {% for f in form %}
-    <div class="form-group">
-        <label>{{ f.label }}</label>
-        {{ f }}
-    </div>
-    {% endfor %}
+    {% bootstrap_form form %}
   <input class="btn btn-primary" type="submit" value="Зарегистрировать">
 </form>
 </div>

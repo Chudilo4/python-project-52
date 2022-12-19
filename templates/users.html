@@ -13,17 +13,19 @@
     </tr>
   </thead>
   <tbody>
+  {%  for u in users %}
       <tr>
-        <td>1</td>
-        <td>ivan-petrov</td>
-        <td>Ivan Petrov</td>
-        <td>28.03.2022 17:11</td>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.first_name }} {{ u.last_name }}</td>
+        <td>{{ u.date_joined }}</td>
         <td>
-          <a href="/users/1/update/">Изменить</a>
+          <a href="{% url 'user_update' u.id %}">Изменить</a>
           <br>
-          <a href="/users/1/delete/">Удалить</a>
+          <a href="{% url 'user_delete' u.id %}">Удалить</a>
         </td>
       </tr>
+  {% endfor %}
   </tbody>
 </table>
 </div>

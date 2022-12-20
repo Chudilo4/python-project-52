@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext
@@ -81,8 +82,15 @@ class UsersDeleteView(View):
 class LoginView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'login.html', {'menu': menu})
-
-
+    def post(self, request, *args, **kwargs):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            redirect('login')
 class LogutView(View):
     def post(self, request, *args, **kwargs):
         return render(request, 'logout.html')

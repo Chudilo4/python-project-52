@@ -48,16 +48,15 @@ class UsersCreateView(View):
 class UsersUpdateView(View):
     def get(self, request, *args, **kwargs):
         user = User.objects.get(pk=kwargs['pk'])
-        form = forms.UpdateUserForm({'first_name': user.first_name,
-                                     'last_name': user.last_name,
-                                     'username': user.username})
+        form = forms.UpdateUserForm(instance=user)
         return render(request, 'users_update.html', {'menu': menu,
                                                      'form': form})
     def post(self, request, *args, **kwargs):
-        form = forms.UpdateUserForm(request.POST)
+        user_pk = kwargs['pk']
+        user = User.objects.get(pk=user_pk)
+        form = forms.UpdateUserForm(request.POST, instance=user)
         if form.is_valid():
-            user = User.objects.get(pk=kwargs['pk'])
-            User.objects.update()
+            form.save()
             return redirect('users')
         else:
             return render(request, 'users_update.html', {'menu': menu,
@@ -66,9 +65,13 @@ class UsersUpdateView(View):
 
 
 class UsersDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(pk=kwargs['pk'])
+        return render(request, 'users_delete.html', {'menu': menu,
+                                                     'user': user})
 
     def post(self, request, *args, **kwargs):
-        user_id = kwargs.get('id')
+        user_id = kwargs['pk']
         user = User.objects.get(id=user_id)
         if user:
             user.delete()

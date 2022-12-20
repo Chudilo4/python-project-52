@@ -8,7 +8,6 @@
     {% load bootstrap4 %}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
-    {% bootstrap_messages %}
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
@@ -41,6 +40,7 @@
         </ul>
       </div>
     </nav>
+{% bootstrap_messages %}
 {% block content %}
 {% endblock %}
 </body>

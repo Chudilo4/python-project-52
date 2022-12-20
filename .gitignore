@@ -1,2 +1,6 @@
 .venv
 .idea
+task_manager/.env
+db.sqlite3
+.gitignore
+setup.cfg

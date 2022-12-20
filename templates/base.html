@@ -4,7 +4,7 @@
 <head>
     <title>Менеджер задач Hexlet</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
     {% load bootstrap4 %}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
@@ -25,13 +25,18 @@
         {% endfor %}
         </ul>
         <ul class="navbar-nav">
-
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+            </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Вход</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'user_create' %}">Регистрация</a>
             </li>
+            {% endif %}
 
         </ul>
       </div>

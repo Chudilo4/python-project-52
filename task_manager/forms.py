@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, AuthenticationForm
 
 
 class RegisterUserForm(forms.ModelForm):
@@ -26,3 +26,8 @@ class UpdateUserForm(forms.ModelForm):
         # Для сохранения в таблицу USER используем модель User
         model = User
         fields = ('first_name', 'last_name', 'username', 'password1', 'password2')
+
+
+class LoginUser(AuthenticationForm):
+    username = forms.CharField(label='Логин')
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput())

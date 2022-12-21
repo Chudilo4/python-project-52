@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, User
 from . import models
@@ -55,3 +54,9 @@ class StatusForm(forms.ModelForm):
     class Meta:
         model = models.Status
         fields = ['name']
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = models.Task
+        fields = ('__all__')

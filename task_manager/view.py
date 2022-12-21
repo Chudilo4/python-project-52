@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, Http404
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext, gettext_lazy
 from django.views import View
@@ -13,12 +13,12 @@ from . import forms
 from django.views.generic import ListView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .models import Status
+from .models import Status, Task
 
 menu = [{'title': 'Пользователи', 'url_name': 'users'},
         {'title': 'Статусы', 'url_name': 'statuses'},
         {'title': 'Метки', 'url_name': 'home'},
-        {'title': 'Задачи', 'url_name': 'home'},
+        {'title': 'Задачи', 'url_name': 'task'},
         ]
 
 
@@ -117,8 +117,42 @@ class StatusDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
 
 
-class Task(ListView):
+class TaskView(LoginRequiredMixin, ListView):
     template_name ='task.html'
     model = Task
     context_object_name = 'tasks'
     extra_context = {'menu': menu}
+    login_url = reverse_lazy('login')
+
+
+class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    template_name = 'task_create.html'
+    form_class = forms.TaskForm
+    extra_context = {'menu': menu}
+    success_url = reverse_lazy('task')
+    login_url = reverse_lazy('login')
+    success_message = gettext_lazy('Task created successfully.')
+
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    template_name = 'task_delete.html'
+    success_url = reverse_lazy('task')
+    extra_context = {'menu': menu}
+
+
+class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'task_create.html'
+    extra_context = {'menu': menu}
+    success_url = reverse_lazy('task')
+    form_class = forms.TaskForm
+    model = Task
+    success_message = gettext_lazy('Task changed successfully.')
+    login_url = reverse_lazy('login')
+
+
+class TaskShowView(LoginRequiredMixin, DetailView):
+    model = Task
+    context_object_name = 'task'
+    template_name = 'task_show.html'
+    login_url = reverse_lazy('login')

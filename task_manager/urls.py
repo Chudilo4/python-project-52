@@ -30,9 +30,9 @@ urlpatterns = [
     path('statuses/create/', view.StatusCreate.as_view(), name='status_create'),
     path('statuses/<int:pk>/update/', view.StatusUpdate.as_view(), name='status_udate'),
     path('statuses/<int:pk>/delete/', view.StatusDelete.as_view(), name='status_delete'),
-    # path('tasks/'),
-    # path('tasks/create/'),
-    # path('tasks/<int:pk>/update/'),
-    # path('tasks/<int:pk>/delete/'),
-    # path('tasks/<int:pk>/')
+    path('tasks/', view.TaskView.as_view(), name='task'),
+    path('tasks/create/', view.TaskCreateView.as_view(), name='task_create'),
+    path('tasks/<int:pk>/update/', view.TaskUpdateView.as_view(), name='task_update'),
+    path('tasks/<int:pk>/delete/', view.TaskDeleteView.as_view(), name='task_delete'),
+    path('tasks/<int:pk>/', view.TaskShowView.as_view(), name='get_task')
 ]

@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{%  block content %}
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Имя</th>
+      <th>Статус</th>
+      <th>Автор</th>
+      <th>Исполнитель</th>
+      <th>Дата создания</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in tasks %}
+      <tr>
+        <td>{{ t.pk }}</td>
+        <td>
+          <a href="{% url 'get_task' t.pk %}">{{ t.name }}</a>
+        </td>
+        <td>{{ t.status }}</td>
+        <td>{{ t.user }}</td>
+        <td>{{ t.user }}</td>
+        <td></td>
+        <td>
+          <a href="{% url 'task_update' t.pk %}">Изменить</a>
+          <br>
+          <a href="{% url 'task_delete' t.pk %}">Удалить</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

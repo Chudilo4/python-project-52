@@ -29,5 +29,10 @@ urlpatterns = [
     path('statuses/', view.StatusesView.as_view(), name='statuses'),
     path('statuses/create/', view.StatusCreate.as_view(), name='status_create'),
     path('statuses/<int:pk>/update/', view.StatusUpdate.as_view(), name='status_udate'),
-    path('statuses/<int:pk>/delete/', view.StatusDelete.as_view(), name='status_delete')
+    path('statuses/<int:pk>/delete/', view.StatusDelete.as_view(), name='status_delete'),
+    # path('tasks/'),
+    # path('tasks/create/'),
+    # path('tasks/<int:pk>/update/'),
+    # path('tasks/<int:pk>/delete/'),
+    # path('tasks/<int:pk>/')
 ]

@@ -7,3 +7,10 @@ class Status(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Task(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Name')
+    description = models.TextField()
+    status = models.ForeignKey(Status)
+    user = models.ForeignKey(User)

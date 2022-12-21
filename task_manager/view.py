@@ -69,7 +69,7 @@ class LoginView(SuccessMessageMixin, LoginView):
     success_message = gettext_lazy('You are log in.')
     extra_context = {'menu': menu}
     error_message = gettext_lazy('An error has occurred.')
-    
+
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
         messages.error(self.request, self.error_message)
@@ -115,3 +115,10 @@ class StatusDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('statuses')
     extra_context = {'menu': menu}
     login_url = reverse_lazy('login')
+
+
+class Task(ListView):
+    template_name ='task.html'
+    model = Task
+    context_object_name = 'tasks'
+    extra_context = {'menu': menu}

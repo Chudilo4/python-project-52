@@ -1,14 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
-from django.test.utils import setup_test_environment
 from django.test import Client, TestCase
-from django.db import models
 from django.urls import reverse_lazy, reverse
 
 
-
-
-class CRUD_Users_Test( TestCase):
+class CrudUsersTest(TestCase):
     def test_create_user(self):
         # Issue a POST request, create new user.
         response = Client().post(reverse_lazy('user_create'),

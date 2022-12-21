@@ -11,6 +11,19 @@
       <th>Дата создания</th>
       <th></th>
     </tr>
+    {{ Status }}
+  {% for s in status%}
+    <tr>
+      <th>{{ s.pk }}</th>
+      <th>{{ s.name }}</th>
+      <th>{{ s.data_create }}</th>
+      <td>
+          <a href="{% url 'status_udate' s.pk %}">Изменить</a>
+          <br>
+          <a href="{% url 'status_delete' s.pk %}">Удалить</a>
+        </td>
+    </tr>
+  {% endfor %}
   </thead>
   <tbody>
 

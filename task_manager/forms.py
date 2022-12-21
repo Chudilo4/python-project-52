@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, User
+from . import models
 
 
 class RegisterUserForm(forms.ModelForm):
@@ -48,3 +49,9 @@ class RegisterUserForm(forms.ModelForm):
 class LoginUser(AuthenticationForm):
     username = forms.CharField(label='Логин')
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput())
+
+
+class StatusForm(forms.ModelForm):
+    class Meta:
+        model = models.Status
+        fields = ['name']

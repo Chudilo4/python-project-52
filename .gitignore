@@ -4,3 +4,5 @@ task_manager/.env
 db.sqlite3
 .gitignore
 setup.cfg
+__pycache__
+task_manager/__pycache__

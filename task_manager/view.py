@@ -22,38 +22,56 @@ menu = [{'title': 'Пользователи', 'url_name': 'users'},
         ]
 
 
+
 class IndexView(TemplateView):
+    '''Вьюха выводит главную страницу'''
     template_name = 'home.html'
     extra_context = {'menu': menu}
 
 
 class UsersView(ListView):
+    '''Вьюха выводит список пользователей'''
     model = User
     template_name = 'users.html'
     context_object_name = 'users'
     extra_context = {'menu': menu}
 
 
-
 class UsersCreateView(CreateView):
+    '''Вьюха вывлдит регистрацию пользователя'''
     template_name = 'users_create.html'
     form_class = forms.RegisterUserForm
     success_url = reverse_lazy('login')
     extra_context = {'menu': menu}
 
-
     def form_valid(self, form):
-        """If the form is valid, save the associated model."""
+        """Есди форма валидна то сохраняем объект в бд"""
         self.object = form.save()
         return super().form_valid(form)
 
 
 class UsersUpdateView(UpdateView):
+    '''Вьюха выводит редактирование пользователя'''
     model = User
     template_name = 'users_update.html'
     success_url = reverse_lazy('users')
     form_class = forms.RegisterUserForm
     extra_context = {'menu': menu}
+
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk
+
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UsersDeleteView(DeleteView):
@@ -62,8 +80,23 @@ class UsersDeleteView(DeleteView):
     success_url = reverse_lazy('user_create')
     extra_context = {'menu': menu}
 
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk
 
-class LoginView(SuccessMessageMixin, LoginView):
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class LoginUserView(SuccessMessageMixin, LoginView):
     template_name = 'login.html'
     form_class = AuthenticationForm
     success_message = gettext_lazy('You are log in.')
@@ -76,13 +109,13 @@ class LoginView(SuccessMessageMixin, LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class LogoutView(LogoutView):
+class LogoutUserView(LogoutView):
     def post(self, request, *args, **kwargs):
         logout(request)
         return HttpResponseRedirect(self.get_success_url())
 
 
-class StatusesView(SuccessMessageMixin, LoginRequiredMixin, ListView):
+class StatusesView(LoginRequiredMixin, ListView):
     template_name = 'statuses.html'
     extra_context = {'menu': menu}
     model = Status
@@ -107,6 +140,21 @@ class StatusUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Status
     login_url = reverse_lazy('login')
     success_message = gettext_lazy('Status changed successfully.')
+
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk
+
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class StatusDelete(LoginRequiredMixin, DeleteView):
@@ -133,12 +181,42 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     success_message = gettext_lazy('Task created successfully.')
 
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk
+
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'task_delete.html'
     success_url = reverse_lazy('task')
     extra_context = {'menu': menu}
+
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk
+
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -149,6 +227,21 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
     success_message = gettext_lazy('Task changed successfully.')
     login_url = reverse_lazy('login')
+
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk
+
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class TaskShowView(LoginRequiredMixin, DetailView):

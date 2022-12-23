@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.utils.translation import gettext, gettext_lazy
 from django.views import View
 from django_filters.views import FilterView
+from django.db import models
 
 from . import forms
 from django.views.generic import ListView, TemplateView
@@ -87,20 +88,17 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
     extra_context = {'menu': menu}
     success_message = gettext('Пользователь успешно удалён')
 
-    def has_permission(self):
-        '''Проверяет по pk пользователя который
-        хочет внести изменения'''
-        return self.get_object().pk == self.request.user.pk
-
-    def dispatch(self, request, *args, **kwargs):
-        '''Функция определяет значение has_permission
-        в случае если True запрос проходит дальше
-        False происходит редирект и выводи сообщение что
-        у пользователя нет прав'''
-        if not self.has_permission():
-            messages.error(request, gettext_lazy('No permission'))
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
+    def form_valid(self, form):
+        """Проверяем что у пользователя есть права на удаление
+        и пользователь не закреплен за задачей"""
+        success_url = self.get_success_url()
+        try:
+            self.object.delete()
+        except models.ProtectedError:
+            messages.error(self.request, 'Невозможно удалить пользователя, потому что он используется')
+            return HttpResponseRedirect(success_url)
+        messages.success(self.request, self.success_message)
+        return HttpResponseRedirect(success_url)
 
 
 class LoginUserView(SuccessMessageMixin, LoginView):

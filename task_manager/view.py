@@ -99,9 +99,8 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
         у пользователя нет прав"""
         if not self.has_permission():
             messages.error(request, gettext_lazy('No permission'))
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
-
+            return self.success_url
+        return self.success_url
 
 
 class LoginUserView(SuccessMessageMixin, LoginView):
@@ -154,7 +153,7 @@ class StatusUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def has_permission(self):
         '''Проверяет по pk пользователя который
         хочет внести изменения'''
-        return self.get_object().pk == self.request.user.pk
+        return self.get_object().pk == self.request.user.pk and self.request.user.is_authenticated
 
     def dispatch(self, request, *args, **kwargs):
         '''Функция определяет значение has_permission

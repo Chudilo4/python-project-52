@@ -41,12 +41,13 @@ class UsersView(ListView):
     extra_context = {'menu': menu}
 
 
-class UsersCreateView(CreateView):
+class UsersCreateView(SuccessMessageMixin, CreateView):
     '''Вьюха вывлдит регистрацию пользователя'''
     template_name = 'users_create.html'
     form_class = forms.RegisterUserForm
     success_url = reverse_lazy('login')
     extra_context = {'menu': menu}
+    success_message = 'Пользователь успешно зарегистрирован'
 
     def form_valid(self, form):
         """Есди форма валидна то сохраняем объект в бд"""

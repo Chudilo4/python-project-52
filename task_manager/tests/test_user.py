@@ -45,5 +45,5 @@ class CrudUsersTest(TestCase):
         user = User.objects.create_user(username='john_smith', password='foo', first_name='john', last_name='smith')
         responser = Client().post(reverse('user_delete', kwargs={'pk': 1}),
                                   )
-        self.assertRedirects(responser, '/users/create/', 302)
+        self.assertRedirects(responser, '/users/', 302)
 

@@ -60,3 +60,9 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = models.Task
         fields = ('__all__')
+
+
+class LabelForm(forms.ModelForm):
+    class Meta:
+        model = models.Label
+        fields = ("__all__")

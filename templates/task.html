@@ -21,9 +21,9 @@
           <a href="{% url 'get_task' t.pk %}">{{ t.name }}</a>
         </td>
         <td>{{ t.status }}</td>
-        <td>{{ t.user }}</td>
-        <td>{{ t.user }}</td>
-        <td></td>
+        <td>{{ t.creator }}</td>
+        <td>{{ t.executor }}</td>
+        <td>{{ t.created_at }}</td>
         <td>
           <a href="{% url 'task_update' t.pk %}">Изменить</a>
           <br>

@@ -34,5 +34,9 @@ urlpatterns = [
     path('tasks/create/', view.TaskCreateView.as_view(), name='task_create'),
     path('tasks/<int:pk>/update/', view.TaskUpdateView.as_view(), name='task_update'),
     path('tasks/<int:pk>/delete/', view.TaskDeleteView.as_view(), name='task_delete'),
-    path('tasks/<int:pk>/', view.TaskShowView.as_view(), name='get_task')
+    path('tasks/<int:pk>/', view.TaskShowView.as_view(), name='get_task'),
+    path('labels/', view.LabelsView.as_view(), name='labels'),
+    path('labels/create/', view.LabelCreateView.as_view(), name='label_create'),
+    path('labels/<int:pk>/update/', view.LabelUpdateView.as_view(), name='label_update'),
+    path('labels/<int:pk>/delete/', view.LabelDeleteView.as_view(), name='label_delete')
 ]

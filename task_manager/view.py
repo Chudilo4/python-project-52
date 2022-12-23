@@ -13,11 +13,11 @@ from . import forms
 from django.views.generic import ListView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .models import Status, Task
+from .models import Status, Task, Label
 
 menu = [{'title': 'Пользователи', 'url_name': 'users'},
         {'title': 'Статусы', 'url_name': 'statuses'},
-        {'title': 'Метки', 'url_name': 'home'},
+        {'title': 'Метки', 'url_name': 'labels'},
         {'title': 'Задачи', 'url_name': 'task'},
         ]
 
@@ -181,20 +181,6 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     success_message = gettext_lazy('Task created successfully.')
 
-    def has_permission(self):
-        '''Проверяет по pk пользователя который
-        хочет внести изменения'''
-        return self.get_object().pk == self.request.user.pk
-
-    def dispatch(self, request, *args, **kwargs):
-        '''Функция определяет значение has_permission
-        в случае если True запрос проходит дальше
-        False происходит редирект и выводи сообщение что
-        у пользователя нет прав'''
-        if not self.has_permission():
-            messages.error(request, gettext_lazy('No permission'))
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
 
 
 class TaskDeleteView(DeleteView):
@@ -249,3 +235,36 @@ class TaskShowView(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
     template_name = 'task_show.html'
     login_url = reverse_lazy('login')
+
+
+class LabelsView(ListView):
+    template_name = 'labels.html'
+    model = Label
+    context_object_name = 'labels'
+    extra_context = {'menu': menu}
+
+
+class LabelCreateView(SuccessMessageMixin, CreateView):
+    form_class = forms.LabelForm
+    template_name = 'labels_create.html'
+    success_url = reverse_lazy('labels')
+    success_message = gettext_lazy('Labels create!')
+    extra_context = {'menu': menu}
+
+
+class LabelUpdateView(SuccessMessageMixin, UpdateView):
+    template_name = 'label_update.html'
+    extra_context = {'menu': menu}
+    success_url = reverse_lazy('labels')
+    form_class = forms.LabelForm
+    model = Label
+    success_message = gettext_lazy('label changed successfully.')
+    login_url = reverse_lazy('login')
+
+
+class LabelDeleteView(DeleteView):
+    model = Label
+    template_name = 'label_delete.html'
+    success_url = reverse_lazy('labels')
+    extra_context = {'menu': menu}
+

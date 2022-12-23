@@ -9,10 +9,14 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext, gettext_lazy
 from django.views import View
+from django_filters.views import FilterView
+
 from . import forms
 from django.views.generic import ListView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib import messages
+
+from .filters import TaskFilter
 from .models import Status, Task, Label
 
 menu = [{'title': 'Пользователи', 'url_name': 'users'},
@@ -165,12 +169,13 @@ class StatusDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
 
 
-class TaskView(LoginRequiredMixin, ListView):
+class TaskView(LoginRequiredMixin, FilterView, ListView):
     template_name ='task.html'
     model = Task
     context_object_name = 'tasks'
     extra_context = {'menu': menu}
     login_url = reverse_lazy('login')
+    filterset_class = TaskFilter
 
 
 class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):

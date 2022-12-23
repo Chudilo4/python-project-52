@@ -113,10 +113,12 @@ class LoginUserView(SuccessMessageMixin, LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class LogoutUserView(LogoutView):
-    def post(self, request, *args, **kwargs):
-        logout(request)
-        return HttpResponseRedirect(self.get_success_url())
+class LogoutUserView(SuccessMessageMixin, LogoutView):
+    success_message = gettext('Вы разлогинены')
+
+    def get_success_url(self):
+        messages.success(self.request, self.success_message)
+        return self.get_redirect_url() or self.get_default_redirect_url()
 
 
 class StatusesView(LoginRequiredMixin, ListView):

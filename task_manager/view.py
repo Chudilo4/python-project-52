@@ -80,11 +80,12 @@ class UsersUpdateView(SuccessMessageMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class UsersDeleteView(DeleteView):
+class UsersDeleteView(SuccessMessageMixin, DeleteView):
     model = User
     template_name = 'users_delete.html'
-    success_url = reverse_lazy('user_create')
+    success_url = reverse_lazy('users')
     extra_context = {'menu': menu}
+    success_message = gettext('Пользователь успешно удалён')
 
     def has_permission(self):
         '''Проверяет по pk пользователя который

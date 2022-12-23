@@ -55,13 +55,14 @@ class UsersCreateView(SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-class UsersUpdateView(UpdateView):
+class UsersUpdateView(SuccessMessageMixin, UpdateView):
     '''Вьюха выводит редактирование пользователя'''
     model = User
     template_name = 'users_update.html'
     success_url = reverse_lazy('users')
     form_class = forms.RegisterUserForm
     extra_context = {'menu': menu}
+    success_message = 'Пользователь успешно изменён'
 
     def has_permission(self):
         '''Проверяет по pk пользователя который

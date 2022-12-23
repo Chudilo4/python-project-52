@@ -97,6 +97,9 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
         except models.ProtectedError:
             messages.error(self.request, 'Невозможно удалить пользователя, потому что он используется')
             return HttpResponseRedirect(success_url)
+        except PermissionError:
+            messages.error(self.request, 'Невозможно удалить пользователя, потому что он используется')
+            return HttpResponseRedirect(success_url)
         messages.success(self.request, self.success_message)
         return HttpResponseRedirect(success_url)
 

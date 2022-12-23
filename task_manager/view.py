@@ -99,8 +99,8 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
         у пользователя нет прав"""
         if not self.has_permission():
             messages.error(request, gettext_lazy('No permission'))
-            return self.success_url
-        return self.success_url
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class LoginUserView(SuccessMessageMixin, LoginView):

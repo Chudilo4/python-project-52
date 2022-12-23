@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, User
+from django.utils.translation import gettext_lazy
+
 from . import models
 
 
@@ -46,8 +48,8 @@ class RegisterUserForm(forms.ModelForm):
 
 
 class LoginUser(AuthenticationForm):
-    username = forms.CharField(label='Логин')
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput())
+    username = forms.CharField(label=gettext_lazy('Username'))
+    password = forms.CharField(label=gettext_lazy('Password'), widget=forms.PasswordInput())
 
 
 class StatusForm(forms.ModelForm):

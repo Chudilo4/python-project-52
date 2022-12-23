@@ -103,7 +103,7 @@ class UsersDeleteView(DeleteView):
 class LoginUserView(SuccessMessageMixin, LoginView):
     template_name = 'login.html'
     form_class = AuthenticationForm
-    success_message = gettext_lazy('You are logged in')
+    success_message = gettext('Вы залогинены')
     extra_context = {'menu': menu}
     error_message = gettext_lazy('An error has occurred.')
 

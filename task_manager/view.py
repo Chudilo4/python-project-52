@@ -91,7 +91,7 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
     def has_permission(self):
         """Проверяет по pk пользователя который
         хочет внести изменения"""
-        return self.get_object().pk == self.request.user.pk
+        return self.request.user.is_authenticated and self.get_object().pk == self.request.user.pk
     def dispatch(self, request, *args, **kwargs):
         """Функция определяет значение has_permission
         в случае если True запрос проходит дальше

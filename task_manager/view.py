@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -11,6 +11,7 @@ from django.utils.translation import gettext, gettext_lazy
 from django.views import View
 from django_filters.views import FilterView
 from django.db import models
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from . import forms
 from django.views.generic import ListView, TemplateView
@@ -88,20 +89,6 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
     extra_context = {'menu': menu}
     success_message = gettext('Пользователь успешно удалён')
 
-    def has_permission(self):
-        """Проверяет по pk пользователя который
-        хочет внести изменения"""
-        return self.request.user.is_authenticated and self.get_object().pk == self.request.user.pk
-    def dispatch(self, request, *args, **kwargs):
-        """Функция определяет значение has_permission
-        в случае если True запрос проходит дальше
-        False происходит редирект и выводи сообщение что
-        у пользователя нет прав"""
-        if not self.has_permission():
-            messages.error(request, gettext_lazy('No permission'))
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
-
 
 class LoginUserView(SuccessMessageMixin, LoginView):
     template_name = 'login.html'
@@ -175,7 +162,7 @@ class StatusDelete(LoginRequiredMixin, DeleteView):
 
 
 class TaskView(LoginRequiredMixin, FilterView, ListView):
-    template_name ='task.html'
+    template_name = 'task.html'
     model = Task
     context_object_name = 'tasks'
     extra_context = {'menu': menu}

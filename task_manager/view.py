@@ -88,6 +88,7 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('users')
     extra_context = {'menu': menu}
     success_message = gettext('Пользователь успешно удалён')
+    query_pk_and_slug = True
 
 
 class LoginUserView(SuccessMessageMixin, LoginView):

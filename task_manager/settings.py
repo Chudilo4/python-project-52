@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import psycopg2
+import dj_database_url
 
 load_dotenv()
 
@@ -91,16 +91,7 @@ DATABASES = {
     }
 }
 if os.getenv('DATABASE_URL'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.getenv("DATABASE_NAME"),
-            'USER': os.getenv("DATABASE_USERNAME"),
-            'PASSWORD': os.getenv("DATABASE_PASSWORD"),
-            'HOST': os.getenv("DATABASE_IP"),
-            'PORT': os.getenv("DATABASE_PORT"),
-        }
-    }
+    DATABASES['default'] = dj_database_url.config(conn_health_checks=True, conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

@@ -88,7 +88,21 @@ class UsersDeleteView(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('users')
     extra_context = {'menu': menu}
     success_message = gettext('Пользователь успешно удалён')
-    query_pk_and_slug = True
+
+    def has_permission(self):
+        '''Проверяет по pk пользователя который
+        хочет внести изменения'''
+        return self.get_object().pk == self.request.user.pk and Task.objects.filter(executor=self.request.user) is None
+    def dispatch(self, request, *args, **kwargs):
+        '''Функция определяет значение has_permission
+        в случае если True запрос проходит дальше
+        False происходит редирект и выводи сообщение что
+        у пользователя нет прав'''
+        if not self.has_permission():
+            messages.error(request, gettext_lazy('No permission'))
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
+
 
 
 class LoginUserView(SuccessMessageMixin, LoginView):

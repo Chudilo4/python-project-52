@@ -41,7 +41,9 @@ class CrudUsersTest(TestCase):
 
     def test_delete_user(self):
         User = get_user_model()
-        user = User.objects.create_user(username='john_smith', password='foo', first_name='john', last_name='smith')
-        responser = Client().post(reverse('user_delete', kwargs={'pk': 1}),
-                                  )
-        self.assertRedirects(responser, '/users/', 302)
+        User.objects.create_user(username='john_smith', password='foo', first_name='john', last_name='smith')
+        response = Client()
+        response.login(username='john_smith', password='foo')
+        code = response.post(reverse('user_delete', kwargs={'pk': 1}))
+        self.assertEqual(User.objects.count(), 0)
+        self.assertRedirects(code, '/users/', 302)

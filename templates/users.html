@@ -20,13 +20,9 @@
         <td>{{ u.first_name }} {{ u.last_name }}</td>
         <td>{{ u.date_joined }}</td>
         <td>
-             {% if user.is_authenticated and user.pk == u.pk %}
           <a href="{% url 'user_update' u.id %}">Изменить</a>
           <br>
           <a href="{% url 'user_delete' u.id %}">Удалить</a>
-            {% else %}
-                 <td><br></td>
-            {% endif %}
         </td>
       </tr>
   {% endfor %}

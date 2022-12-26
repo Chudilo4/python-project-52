@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 
 
 class CrudUsersTest(TestCase):
+
     def test_create_user(self):
         # Issue a POST request, create new user.
         response = Client().post(reverse_lazy('user_create'),
@@ -29,16 +30,14 @@ class CrudUsersTest(TestCase):
     def test_update_user(self):
         User = get_user_model()
         user = User.objects.create_user(username='john_smith', password='foo', first_name='john', last_name='smith')
-        response = Client().post(reverse('user_update', kwargs={'pk': user.pk}),
-                                 {'username': 'Terra',
-                                  'first_name': 'Jack',
-                                  'last_name': 'Richard',
-                                  'password1': '12345',
-                                  'password2': '12345',
-                                  })
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/users/')
-        self.assertEqual(User.objects.get(pk=1).username, 'Terra')
+        c = Client()
+        c.login(username='john_smith', password='foo')
+        c.post('/users/1/update/', {'username': 'Tera',
+                                    'first_name': 'jo',
+                                    'last_name': 'Totot',
+                                    'password1': 1234,
+                                    'password2': 1234})
+        self.assertEqual(User.objects.get(pk=1).username, 'Tera')
 
     def test_delete_user(self):
         User = get_user_model()

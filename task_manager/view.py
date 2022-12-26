@@ -195,27 +195,11 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     success_message = gettext_lazy('Task created successfully.')
 
 
-
 class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'task_delete.html'
     success_url = reverse_lazy('task')
     extra_context = {'menu': menu}
-
-    def has_permission(self):
-        '''Проверяет по pk пользователя который
-        хочет внести изменения'''
-        return self.get_object().pk == self.request.user.pk
-
-    def dispatch(self, request, *args, **kwargs):
-        '''Функция определяет значение has_permission
-        в случае если True запрос проходит дальше
-        False происходит редирект и выводи сообщение что
-        у пользователя нет прав'''
-        if not self.has_permission():
-            messages.error(request, gettext_lazy('No permission'))
-            return redirect('task')
-        return super().dispatch(request, *args, **kwargs)
 
 
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

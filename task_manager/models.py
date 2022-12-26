@@ -32,14 +32,8 @@ class Task(models.Model):
                                  verbose_name='Executor')
     created_at = models.DateTimeField(auto_now_add=True)
     labels = models.ManyToManyField(Label,
-                                    through="LabelsOfTask",
                                     verbose_name='Labels')
 
     def __str__(self):
         return self.name
-
-
-class LabelsOfTask(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    label = models.ForeignKey(Label, on_delete=models.PROTECT)
 

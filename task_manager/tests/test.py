@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse, reverse_lazy
 
-from task_manager.models import User
+from task_manager.models import User, Label, Status, Task
 
 
 class CRUD_Users_Test(TestCase):
@@ -44,3 +44,31 @@ class CRUD_Users_Test(TestCase):
                                     follow=True)
         self.assertRedirects(response, reverse_lazy('users'))
         self.assertEqual(User.objects.filter(pk=self.user.pk).count(), 0)
+
+
+class CRUD_Label_Test(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='test', password='123456789Zz')
+        self.label = Label.objects.create(name='123')
+        self.client.login(username='test', password='123456789Zz')
+
+    def created_label(self):
+        response = self.client.post(reverse('label_create'),
+                                    {'name': '123'},
+                                    follow=True)
+        self.assertEqual(Label.objects.get(name='123').name, '123')
+        self.assertRedirects(response, reverse_lazy('labels'))
+
+    def update_label(self):
+        response = self.client.post(reverse('label_create', kwargs={'pk': self.label.pk}),
+                                    {'name': '456'},
+                                    follow=True)
+        self.assertEqual(Label.objects.get(name='456').name, '456')
+        self.assertRedirects(response, reverse_lazy('labels'), target_status_code=302)
+
+    def delete_label(self):
+        response = self.client.post(reverse('label_delete', kwargs={'pk': self.label.pk}),
+                                    follow=True)
+        self.assertEqual(Label.objects.filter(name='123').count(), 0)
+        self.assertRedirects(response, reverse_lazy('labels'), target_status_code=302)

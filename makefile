@@ -15,3 +15,7 @@ test:
 	poetry run python manage.py test task_manager
 start2:
 	poetry run python manage.py migrate && gunicorn task_manager.wsgi
+lint:
+	poetry run flake8 --ignore=E501 task_manager
+test:
+    poetry run python manage.py test

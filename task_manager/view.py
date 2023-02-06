@@ -9,7 +9,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django_filters.views import FilterView
 
-from task_manager.forms import *
+from task_manager.forms import UserCreateForm, StatusCreateForm, TaskCreateForm, LabelCreateForm
+from task_manager.models import User, Status, Task, Label
 
 
 class BaseView(TemplateView):
@@ -72,7 +73,6 @@ class UserLoginView(SuccessMessageMixin, LoginView):
 
 class LogutUserView(SuccessMessageMixin, LogoutView):
     success_message = 'Вы разлогинены'
-
 
 
 class StatusListView(LoginRequiredMixin, ListView):

@@ -1,18 +1,16 @@
-from django.db.models import ProtectedError
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
-
-from task_manager.filter import TaskFilter
-from task_manager.forms import *
-from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import ProtectedError
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django_filters.views import FilterView
+
+from task_manager.forms import *
+
 
 class BaseView(TemplateView):
     template_name = 'task_manager/base.html'
@@ -188,4 +186,3 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
         except ProtectedError:
             messages.error(request, 'Невозможно удалить метку, потому что она используется')
             return redirect('labels')
-

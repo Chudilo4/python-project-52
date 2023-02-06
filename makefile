@@ -8,7 +8,6 @@ check:
 	poetry check
 lint:
 	poetry run flake8
-
 migrate:
 	poetry run python manage.py makemigrations task_manager
 	poetry run python manage.py migrate

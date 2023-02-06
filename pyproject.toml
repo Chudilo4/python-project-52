@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["chudilo4 <chipalinchik@gmail.com>"]
 readme = "README.md"
-packages = [  { include = "task_manager" },]
+packages = [  { include = "python-project-52" },]
 
 
 [tool.poetry.dependencies]

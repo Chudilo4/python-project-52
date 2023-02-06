@@ -19,3 +19,6 @@ lint:
 	poetry run flake8 --ignore=E501 task_manager
 test:
     poetry run python manage.py test
+coverage-xml: #start tests code coverage and write report is xml-file for CodeClimate
+	poetry run coverage run --source='.' manage.py test task_manager
+	poetry run coverage xml

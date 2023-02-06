@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'task_manager/base.html' %}
 {% block content %}
 <div class="container wrapper flex-grow-1">
     <h1 class="my-4">Пользователи</h1>
@@ -20,9 +20,9 @@
         <td>{{ u.first_name }} {{ u.last_name }}</td>
         <td>{{ u.date_joined }}</td>
         <td>
-          <a href="{% url 'user_update' u.id %}">Изменить</a>
+          <a href="{% url 'users_update' u.pk %}">Изменить</a>
           <br>
-          <a href="{% url 'user_delete' u.id %}">Удалить</a>
+          <a href="{% url 'users_delete' u.pk %}">Удалить</a>
         </td>
       </tr>
   {% endfor %}

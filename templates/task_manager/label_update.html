@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'task_manager/base.html' %}
 {% load bootstrap4 %}
 {% block content %}
     <div class="container wrapper flex-grow-1">
@@ -7,7 +7,7 @@
     {% csrf_token %}
     {% bootstrap_form form %}
   <div class="form-group">
-    <input class="btn btn-primary" type="submit" value="Создать">
+    <input class="btn btn-primary" type="submit" value="Изменить">
   </div>
 </form>
     </div>

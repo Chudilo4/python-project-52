@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'task_manager/base.html' %}
 {% load bootstrap4 %}
 {% block content %}
 <div class="container wrapper flex-grow-1">
       <h1 class="my-4">Просмотр задачи</h1>
 <div class="card">
   <div class="card-header bg-secondary text-white">
-    <h2>{{ task.name }}</h2>
+    <h2>{{ task.title }}</h2>
   </div>
   <div class="card-body bg-light">
     <p>{{ task.description }}</p>
@@ -13,7 +13,7 @@
     <div class="container">
       <div class="row p-1">
         <div class="col">Автор</div>
-        <div class="col">{{ task.creator }}</div>
+        <div class="col">{{ task.author }}</div>
       </div>
       <div class="row p-1">
         <div class="col">Исполнитель</div>
@@ -25,7 +25,7 @@
       </div>
       <div class="row p-1">
         <div class="col">Дата создания</div>
-        <div class="col">{{ task.created_at }}</div>
+        <div class="col">{{ task.created }}</div>
       </div>
       <div class="row p-1">
         <div class="col">

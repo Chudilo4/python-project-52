@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'task_manager/base.html' %}
 {% block content %}
 <div class="container wrapper flex-grow-1">
      <h1 class="my-4">Статусы</h1>
@@ -12,13 +12,13 @@
       <th></th>
     </tr>
     {{ Status }}
-  {% for s in status%}
+  {% for s in status %}
     <tr>
       <th>{{ s.pk }}</th>
-      <th>{{ s.name }}</th>
-      <th>{{ s.created_at }}</th>
+      <th>{{ s.title }}</th>
+      <th>{{ s.created }}</th>
       <td>
-          <a href="{% url 'status_udate' s.pk %}">Изменить</a>
+          <a href="{% url 'status_update' s.pk %}">Изменить</a>
           <br>
           <a href="{% url 'status_delete' s.pk %}">Удалить</a>
         </td>

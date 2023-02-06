@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'task_manager/base.html' %}
 {% load bootstrap4 %}
 {% block content %}
 <div class="container wrapper flex-grow-1">
@@ -18,7 +18,7 @@
       <tr>
         <td>{{ l.pk }}</td>
         <td>{{ l.name}}</td>
-        <td>{{ l.created_at }}</td>
+        <td>{{ l.created }}</td>
         <td>
           <a href="{% url 'label_update' l.pk %}">Изменить</a>
           <br>

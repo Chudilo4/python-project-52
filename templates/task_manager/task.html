@@ -4,9 +4,15 @@
 <h1 class="my-4">Задачи</h1>
 <a class="nav-link" href="{% url 'task_create' %}">Создать задачу</a>
     <div class="card mb-3">
+    <div class="card-body bg-light">
+    <form method="get" class="form-inline center">
+        {% bootstrap_form filter.form %}
+        {% bootstrap_button content='Показать' button_type="submit" %}
+    </form>
+
+  </div>
 
 </div>
-
     <table class="table table-striped">
   <thead>
     <tr>

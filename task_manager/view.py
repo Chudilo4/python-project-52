@@ -2,6 +2,8 @@ from django.db.models import ProtectedError
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
+
+from task_manager.filter import TaskFilter
 from task_manager.forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
@@ -22,11 +24,12 @@ class UsersListView(ListView):
     context_object_name = 'users'
 
 
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     template_name = 'task_manager/users_create.html'
     form_class = UserCreateForm
     success_url = reverse_lazy('login')
+    success_message = 'Пользователь успешно зарегистрирован'
 
 
 class UserUpdateView(PermissionRequiredMixin, UpdateView):
@@ -69,6 +72,11 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     success_message = 'Вы залогинены'
 
 
+class LogutUserView(SuccessMessageMixin, LogoutView):
+    success_message = 'Вы разлогинены'
+
+
+
 class StatusListView(LoginRequiredMixin, ListView):
     model = Status
     template_name = 'task_manager/status.html'
@@ -99,11 +107,12 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
 
 
-class TaskListView(LoginRequiredMixin, ListView):
+class TaskListView(LoginRequiredMixin, FilterView, ListView):
     model = Task
     template_name = 'task_manager/task.html'
     context_object_name = 'tasks'
     login_url = reverse_lazy('login')
+    filterset_fields = ['status', 'executor', 'labels', 'author']
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):

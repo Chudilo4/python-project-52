@@ -13,5 +13,6 @@ migrate:
 	poetry run python manage.py migrate
 test:
 	poetry run python manage.py test task_manager
+PORT ?= 5000
 start2:
-	poetry run python manage.py migrate && gunicorn task_manager.wsgi
+	poetry run python manage.py migrate && gunicorn -w 5 -b 0.0.0.0:$(PORT) task_manager.wsgi

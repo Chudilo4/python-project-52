@@ -31,3 +31,11 @@ jobs:
     - name: Run Lint
       run: |
         male lint
+    - name: Code Climate Coverage Action
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        CC_TEST_REPORTER_ID: b4f7b4acd6fa06bf45ee2e0202a446952799352f4172f93c1c9f73a19025f318
+      with:
+        coverageCommand: make coverage-xml
+        debug: true

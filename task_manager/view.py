@@ -93,7 +93,7 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
 class StatusUpdateView(LoginRequiredMixin, UpdateView):
     model = Status
     form_class = StatusCreateForm
-    template_name = 'task_manager/status_create.html'
+    template_name = 'task_manager/status_update.html'
     success_url = reverse_lazy('status')
     login_url = reverse_lazy('login')
 
@@ -128,7 +128,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskCreateForm
-    template_name = 'task_manager/task_create.html'
+    template_name = 'task_manager/task_update.html'
     success_url = reverse_lazy('tasks')
 
     def get_form_kwargs(self):

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Имя</th>
+      <th>Дата создания</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for status in statuss %}
+      <tr>
+        <td>1</td>
+        <td>Too-too-too-too motherf***2</td>
+        <td>29.01.2023 19:46</td>
+        <td>
+          <a href="/statuses/1/update/">Изменить</a>
+          <br>
+          <a href="/statuses/1/delete/">Удалить</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

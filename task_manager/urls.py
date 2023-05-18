@@ -17,12 +17,33 @@ Including another URLconf
 
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from task_manager.views import (
+    HomeView,
+    UserListView,
+    UserCreateView,
+    UserUpdateView,
+    UserDeleteView,
+    Login, StatusListView,
+    StatusCreateView, StatusUpdateView,
+    StatusDeleteView)
 
+
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('user.urls')),
+    path('', HomeView.as_view(), name='home'),
+    path('users/', UserListView.as_view(), name='user_list'),
+    path('users/create/', UserCreateView.as_view(), name='user_create'),
+    path('users/<int:pk>/update/', UserUpdateView.as_view(), name='user_update'),
+    path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='user_delete'),
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('statuses/', StatusListView.as_view(), name="status_list"),
+    path('statuses/create/', StatusCreateView.as_view(), name='status_create'),
+    path('statuses/<int:pk>/update/', StatusUpdateView.as_view(), name='status_update'),
+    path('statuses/<int:pk>/delete/', StatusDeleteView.as_view(), name='status_delete'),
 
 
 ]

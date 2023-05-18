@@ -22,7 +22,7 @@
             <a class="nav-link" href="{% url 'user_list' %}">Пользователи<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="{% url 'status_list' %}">Статусы</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -49,6 +49,9 @@
     </nav>
     <main role="main" class="container">
         <div class="jumbotron">
+            {% if messages %}
+                {% bootstrap_messages %}
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>

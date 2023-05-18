@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Status
 
 
 class RegisterForm(UserCreationForm):
@@ -17,3 +17,10 @@ class UserUpdateForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'username',]
+
+
+class StatusCreateForm(forms.ModelForm):
+    class Meta:
+        model = Status
+        fields = ['name']
+

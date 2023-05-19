@@ -25,7 +25,7 @@
             <a class="nav-link" href="{% url 'status_list' %}">Статусы</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="{% url 'task_list' %}" tabindex="-1" aria-disabled="true">Задачи</a>
           </li>
         </ul>
           {% if request.user.is_authenticated %}

@@ -60,10 +60,11 @@ class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
         return redirect('user_list')
 
 
-class UserDeleteView(PermissionRequiredMixin, DeleteView):
+class UserDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'user_delete.html'
     model = User
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('user_list')
+    success_message = 'Пользователь успешно удалён'
 
     def has_permission(self, *args, **kwargs):
         return self.request.user == self.get_object()

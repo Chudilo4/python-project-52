@@ -21,7 +21,7 @@ from django.urls import path
 from task_manager.views import (
     HomeView, UserListView,
     UserCreateView, UserUpdateView,
-    UserDeleteView, Login, StatusListView,
+    UserDeleteView, Login, Logout, StatusListView,
     StatusCreateView, StatusUpdateView,
     StatusDeleteView, TaskListView,
     TaskCreateView, TaskUpdateView,
@@ -29,7 +29,7 @@ from task_manager.views import (
     LabelListView, LabelCreateView,
     LabelDeleteView, LabelUpdateView)
 
-from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,7 +39,7 @@ urlpatterns = [
     path('users/<int:pk>/update/', UserUpdateView.as_view(), name='user_update'),
     path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='user_delete'),
     path('login/', Login.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', Logout.as_view(), name='logout'),
     path('statuses/', StatusListView.as_view(), name="status_list"),
     path('statuses/create/', StatusCreateView.as_view(), name='status_create'),
     path('statuses/<int:pk>/update/', StatusUpdateView.as_view(), name='status_update'),

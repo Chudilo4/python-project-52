@@ -13,7 +13,7 @@ from task_manager.forms import (
     RegisterForm, UserUpdateForm,
     StatusCreateForm, TaskCreateForm,
     LabelCreateForm)
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 
 from .filters import TaskFilter
 from .models import Status, Task, Label
@@ -77,6 +77,13 @@ class Login(SuccessMessageMixin, LoginView):
     template_name = 'login.html'
     success_url = reverse_lazy('home')
     success_message = 'Вы залогинены'
+
+
+class Logout(LogoutView):
+
+    def get_success_url(self):
+        messages.success(self.request, 'Вы разлогинены')
+        return self.get_redirect_url() or self.get_default_redirect_url()
 
 
 class StatusListView(LoginRequiredMixin, SuccessMessageMixin, ListView):

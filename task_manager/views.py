@@ -16,12 +16,13 @@ from task_manager.forms import (
 from django.contrib.auth.views import LoginView
 
 from .filters import TaskFilter
-from .models import CustomUser, Status, Task, Label
+from .models import Status, Task, Label
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django_filters.views import FilterView
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import User
 
 
 class HomeView(TemplateView):
@@ -30,13 +31,13 @@ class HomeView(TemplateView):
 
 class UserListView(ListView):
     template_name = 'users.html'
-    model = CustomUser
+    model = User
     context_object_name = 'users'
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'user_create.html'
-    model = CustomUser
+    model = User
     form_class = RegisterForm
     success_url = reverse_lazy('login')
     success_message = 'Пользователь успешно зарегистрирован'
@@ -44,7 +45,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'user_update.html'
-    model = CustomUser
+    model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy('user_list')
     success_message = 'Пользователь успешно изменён'
@@ -61,7 +62,7 @@ class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
 
 class UserDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'user_delete.html'
-    model = CustomUser
+    model = User
     success_url = reverse_lazy('home')
 
     def has_permission(self, *args, **kwargs):

@@ -48,7 +48,7 @@ class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy('user_list')
-    success_message = 'Пользователь успешно изменён'
+    success_message = 'Пользователь успешно изменен'
     permission_denied_message = 'У вас нет прав для изменения другого пользователя.'
     redirect_field_name = reverse_lazy('users')
 

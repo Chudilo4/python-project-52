@@ -78,19 +78,11 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DB_CONF'),
+        conn_max_age=600
+    )
 }
-
-if not DEBUG:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DB_CONF'),
-            conn_max_age=600
-        )
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -133,7 +125,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # User
 AUTH_USER_MODEL = 'task_manager.CustomUser'
-
 
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = '/'

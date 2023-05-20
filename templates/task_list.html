@@ -2,7 +2,11 @@
 {% load bootstrap4 %}
 {% block content %}
     <h1 class="my-4">Задачи</h1>
-    <a class="nav-link" href="/tasks/create/">Создать задачу</a>
+    <a class="nav-link" href="{% url 'task_create' %}">Создать задачу</a>
+    <form method="get">
+        {% bootstrap_form filter.form %}
+        {% bootstrap_button  button_type='submit' content="Показать" %}
+    </form>
     <table class="table table-striped">
   <thead>
     <tr>

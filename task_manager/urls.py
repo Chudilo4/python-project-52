@@ -18,6 +18,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+
+from task_manager.filters import TaskFilter
 from task_manager.views import (
     HomeView,
     UserListView,
@@ -26,7 +28,8 @@ from task_manager.views import (
     UserDeleteView,
     Login, StatusListView,
     StatusCreateView, StatusUpdateView,
-    StatusDeleteView, TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView, TaskDetailView)
+    StatusDeleteView, TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView, TaskDetailView, LabelListView, LabelCreateView,
+LabelDeleteView, LabelUpdateView)
 
 
 from django.contrib.auth.views import LogoutView
@@ -49,6 +52,9 @@ urlpatterns = [
     path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='task_update'),
     path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='task_delete'),
     path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task_detail'),
-
+    path('labels/', LabelListView.as_view(), name='label_list'),
+    path('labels/create/', LabelCreateView.as_view(), name='label_create'),
+    path('labels/<int:pk>/update/', LabelUpdateView.as_view(), name='label_update'),
+    path('labels/<int:pk>/delete/', LabelDeleteView.as_view(), name='label_delete'),
 
 ]

@@ -67,7 +67,7 @@ class UserDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     success_message = 'Пользователь успешно удалён'
 
     def has_permission(self, *args, **kwargs):
-        return self.request.user == self.get_object() and len(self.request.user.task_author.all()) == 0
+        return self.request.user == self.get_object() and len(self.request.user.task_exectot.all()) == 0
 
     def handle_no_permission(self):
         messages.error(self.request, 'У вас нет прав для изменения другого пользователя.')

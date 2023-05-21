@@ -118,7 +118,7 @@ class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'status_update.html'
     form_class = StatusCreateForm
     success_url = reverse_lazy('status_list')
-    success_message = 'Статус успешно изменён'
+    success_message = 'Статус успешно изменен'
     login_url = reverse_lazy('login')
 
 

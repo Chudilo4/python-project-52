@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Status, Task, Label
 from MyCustomUser.models import CustomUser
-from django.forms import ValidationError
+from django.forms import ValidationError, ModelMultipleChoiceField
 
 
 class RegisterForm(UserCreationForm):
@@ -58,6 +58,9 @@ class StatusCreateForm(forms.ModelForm):
 
 
 class TaskCreateForm(forms.ModelForm):
+    labels = ModelMultipleChoiceField(queryset=Label.objects.all(),
+                                      required=False,
+                                      label='Метки')
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'label']

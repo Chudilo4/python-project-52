@@ -128,7 +128,7 @@ class StatusDeleteView(LoginRequiredMixin,
                        DeleteView):
     template_name = 'status_delete.html'
     model = Status
-    success_message = 'Статус успешно удалён'
+    success_message = 'Статус успешно удален'
     success_url = reverse_lazy('status_list')
     login_url = reverse_lazy('login')
 

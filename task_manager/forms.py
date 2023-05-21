@@ -8,7 +8,6 @@ from django.forms import ValidationError
 
 
 class RegisterForm(UserCreationForm):
-
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'password1', 'password2']
@@ -59,6 +58,10 @@ class StatusCreateForm(forms.ModelForm):
 
 
 class TaskCreateForm(forms.ModelForm):
+    executor = forms.ModelChoiceField(queryset=User.objects.all(),
+                                      required=False,
+                                      label='Исполнитель')
+
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'label']

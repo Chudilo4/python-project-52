@@ -220,6 +220,7 @@ class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     login_url = reverse_lazy('login')
     success_message = 'Метка успешно изменена'
 
+
 class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     model = Label
     template_name = 'label_delete.html'

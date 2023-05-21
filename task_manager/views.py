@@ -70,7 +70,7 @@ class UserDeleteView(PermissionRequiredMixin, DeleteView):
         success_url = self.get_success_url()
         try:
             self.object.delete()
-            messages.success(self.request, 'Пользователь успешно удалён')
+            messages.success(self.request, 'Пользователь успешно удален')
         except ProtectedError:
             messages.error(self.request, 'Невозможно удалить пользователя, потому что он используется')
             return HttpResponseRedirect(success_url)

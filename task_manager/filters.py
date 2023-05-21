@@ -5,7 +5,7 @@ from .models import Task
 
 
 class TaskFilter(django_filters.FilterSet):
-    my_task = django_filters.BooleanFilter(field_name='author',
+    my_task = django_filters.BooleanFilter(field_name='executor',
                                            label='Только свои задачи',
                                            widget=forms.CheckboxInput)
 

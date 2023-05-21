@@ -23,6 +23,7 @@ from django.shortcuts import render, redirect
 from django_filters.views import FilterView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import ProtectedError
 
 
 class HomeView(TemplateView):
@@ -60,14 +61,23 @@ class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
         return redirect('user_list')
 
 
-class UserDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
+class UserDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'user_delete.html'
     model = User
     success_url = reverse_lazy('user_list')
-    success_message = 'Пользователь успешно удалён'
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        try:
+            self.object.delete()
+            messages.success(self.request, 'Пользователь успешно удалён')
+        except ProtectedError:
+            messages.error(self.request, 'Невозможно удалить пользователя, потому что он используется')
+            return HttpResponseRedirect(success_url)
+        return HttpResponseRedirect(success_url)
 
     def has_permission(self, *args, **kwargs):
-        return self.request.user == self.get_object() and len(self.request.user.task_exectot.all()) == 0
+        return self.request.user == self.get_object()
 
     def handle_no_permission(self):
         messages.error(self.request, 'У вас нет прав для изменения другого пользователя.')

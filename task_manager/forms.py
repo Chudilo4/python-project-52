@@ -1,10 +1,9 @@
-from collections import OrderedDict
-
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Status, Task, Label
+from django.contrib.auth.forms import UserCreationForm
+from django.forms import ValidationError
+
 from MyCustomUser.models import CustomUser
-from django.forms import ValidationError, ModelMultipleChoiceField
+from .models import Status, Task, Label
 
 
 class RegisterForm(UserCreationForm):

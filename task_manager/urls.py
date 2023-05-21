@@ -31,7 +31,6 @@ from task_manager.views import (
     LabelDeleteView, LabelUpdateView)
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),

@@ -72,7 +72,8 @@ class UserDeleteView(PermissionRequiredMixin, DeleteView):
             self.object.delete()
             messages.success(self.request, 'Пользователь успешно удален')
         except ProtectedError:
-            messages.error(self.request, 'Невозможно удалить пользователя, потому что он используется')
+            messages.error(self.request,
+                           'Невозможно удалить пользователя, потому что он используется')
             return HttpResponseRedirect(success_url)
         return HttpResponseRedirect(success_url)
 

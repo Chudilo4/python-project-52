@@ -162,6 +162,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
             task = form.save(commit=False)
             task.author = request.user
             task.save()
+            form.save_m2m()
             messages.success(self.request, self.success_message)
             return HttpResponseRedirect(self.success_url)
         return render(request, 'task_create.html', {'form': form})

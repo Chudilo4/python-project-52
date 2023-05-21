@@ -225,6 +225,7 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequire
     template_name = 'label_delete.html'
     success_url = reverse_lazy('label_list')
     login_url = reverse_lazy('login')
+    success_message = 'Метка успешно удалена'
 
     def has_permission(self):
         return len(self.get_object().task_set.all()) == 0

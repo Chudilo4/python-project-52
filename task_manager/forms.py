@@ -59,7 +59,7 @@ class StatusCreateForm(forms.ModelForm):
 
 class TaskCreateForm(forms.ModelForm):
     executor = forms.ModelChoiceField(queryset=User.objects.all(),
-                                      required=False,
+                                      empty_label='Исполнитель',
                                       label='Исполнитель')
 
     class Meta:

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'django_filters',
-    'MyCustomUser.apps.MycustomuserConfig'
+    'MyCustomUser'
 ]
 
 MIDDLEWARE = [

@@ -58,9 +58,6 @@ class StatusCreateForm(forms.ModelForm):
 
 
 class TaskCreateForm(forms.ModelForm):
-    labels = ModelMultipleChoiceField(queryset=Label.objects.all(),
-                                     required=False,
-                                     label='Метки')
 
     class Meta:
         model = Task

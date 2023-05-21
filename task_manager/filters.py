@@ -5,13 +5,13 @@ from .models import Task, Label
 
 
 class TaskFilter(django_filters.FilterSet):
-    label = django_filters.ModelMultipleChoiceFilter(label='Метка',
-                                                     queryset=Label.objects.all(),
-                                                     conjoined=True)
+    labels = django_filters.ModelMultipleChoiceFilter(label='Метка',
+                                                      queryset=Label.objects.all(),
+                                                      conjoined=True)
 
     class Meta:
         model = Task
-        fields = ['status', 'label', 'executor']
+        fields = ['status', 'labels', 'executor']
 
     @property
     def qs(self):

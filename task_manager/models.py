@@ -22,8 +22,8 @@ class Task(models.Model):
                                  blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='Статус',
                                related_name='task_status')
-    label = models.ManyToManyField("Label", through='LabelsOfTask', verbose_name='Метки',
-                                   blank=True, null=True)
+    labels = models.ManyToManyField("Label", through='LabelsOfTask', verbose_name='Метки',
+                                    blank=True, null=True)
     author = models.ForeignKey(CustomUser, on_delete=models.PROTECT, verbose_name='Автор',
                                related_name='task_author')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')

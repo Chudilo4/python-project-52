@@ -1,14 +1,20 @@
 import django_filters
 
 from django import forms
-from .models import Task
+from .models import Task, Label
 
 
 class TaskFilter(django_filters.FilterSet):
-    my_task = django_filters.BooleanFilter(field_name='executor',
-                                           label='Только свои задачи',
-                                           widget=forms.CheckboxInput)
 
     class Meta:
         model = Task
-        fields = ['status', 'my_task', 'label']
+        fields = ['status', 'label']
+
+    @property
+    def qs(self):
+        parent = super().qs
+        if self.request.GET.get('self_tasks') == 'on':
+            author = getattr(self.request, 'user')
+            return parent.filter(author=author)
+        return parent
+

@@ -141,9 +141,8 @@ class StatusDeleteView(LoginRequiredMixin,
         return redirect('status_list')
 
 
-class TaskListView(LoginRequiredMixin, FilterView, ListView):
+class TaskListView(LoginRequiredMixin, FilterView):
     template_name = 'task_list.html'
-    model = Task
     filterset_class = TaskFilter
     login_url = reverse_lazy('login')
 

@@ -203,12 +203,13 @@ class LabelListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
 
 
-class LabelCreateView(LoginRequiredMixin, CreateView):
+class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Label
     form_class = LabelCreateForm
     template_name = 'label_create.html'
     success_url = reverse_lazy('label_list')
     login_url = reverse_lazy('login')
+    success_message = 'Метка успешно создана'
 
 
 class LabelUpdateView(LoginRequiredMixin, UpdateView):
@@ -219,7 +220,7 @@ class LabelUpdateView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
 
 
-class LabelDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     model = Label
     template_name = 'label_delete.html'
     success_url = reverse_lazy('label_list')

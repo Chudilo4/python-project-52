@@ -176,11 +176,13 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     login_url = reverse_lazy('login')
 
 
-class TaskDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin,
+                     PermissionRequiredMixin, DeleteView):
     template_name = 'task_delete.html'
     model = Task
     success_url = reverse_lazy('task_list')
     login_url = reverse_lazy('login')
+    success_message = 'Задача успешно удалена'
 
     def has_permission(self):
         return self.get_object().author == self.request.user

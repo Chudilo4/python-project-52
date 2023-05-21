@@ -212,13 +212,13 @@ class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = 'Метка успешно создана'
 
 
-class LabelUpdateView(LoginRequiredMixin, UpdateView):
+class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelCreateForm
     template_name = 'label_update.html'
     success_url = reverse_lazy('label_list')
     login_url = reverse_lazy('login')
-
+    success_message = 'Метка успешно изменена'
 
 class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     model = Label

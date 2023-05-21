@@ -58,13 +58,13 @@ class StatusCreateForm(forms.ModelForm):
 
 
 class TaskCreateForm(forms.ModelForm):
-    label = ModelMultipleChoiceField(queryset=Label.objects.all(),
+    labels = ModelMultipleChoiceField(queryset=Label.objects.all(),
                                      required=False,
                                      label='Метки')
 
     class Meta:
         model = Task
-        fields = ['name', 'description', 'status', 'executor', 'label']
+        fields = ['name', 'description', 'status', 'executor', 'labels']
 
 
 class LabelCreateForm(forms.ModelForm):

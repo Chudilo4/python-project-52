@@ -15,7 +15,7 @@ class Status(models.Model):
 
 
 class Task(models.Model):
-    name = models.CharField(blank=False, null=False, verbose_name='Имя', max_length=15)
+    name = models.CharField(blank=False, null=False, verbose_name='Имя', max_length=255)
     description = models.TextField(verbose_name='Описание')
     executor = models.ForeignKey(User, on_delete=models.PROTECT,
                                  verbose_name='Исполнитель', related_name='task_exectot')
@@ -32,7 +32,7 @@ class Task(models.Model):
 
 
 class Label(models.Model):
-    name = models.CharField(blank=False, null=False, verbose_name='Имя', max_length=15)
+    name = models.CharField(blank=False, null=False, verbose_name='Имя', max_length=255)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     update_time = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 

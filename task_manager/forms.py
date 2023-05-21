@@ -3,13 +3,13 @@ from collections import OrderedDict
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Status, Task, Label
-from django.contrib.auth.models import User
+from MyCustomUser.models import CustomUser
 from django.forms import ValidationError
 
 
 class RegisterForm(UserCreationForm):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'password1', 'password2']
 
 
@@ -28,7 +28,7 @@ class UserUpdateForm(forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['first_name', 'last_name', 'username']
 
     def clean_password2(self):
@@ -58,10 +58,6 @@ class StatusCreateForm(forms.ModelForm):
 
 
 class TaskCreateForm(forms.ModelForm):
-    executor = forms.ModelChoiceField(queryset=User.objects.all(),
-                                      empty_label='Исполнитель',
-                                      label='Исполнитель')
-
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'label']

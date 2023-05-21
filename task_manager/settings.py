@@ -33,15 +33,16 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'webserver localhost 127.0.0.1').spli
 # Application definition
 
 INSTALLED_APPS = [
+    'task_manager',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'task_manager',
     'bootstrap4',
     'django_filters',
+    'MyCustomUser.apps.MycustomuserConfig'
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = '/'
+
+# User
+AUTH_USER_MODEL = 'MyCustomUser.CustomUser'

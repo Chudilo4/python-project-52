@@ -22,7 +22,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django_filters.views import FilterView
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.models import User
+from MyCustomUser.models import CustomUser
 from django.db.models import ProtectedError
 
 
@@ -32,13 +32,13 @@ class HomeView(TemplateView):
 
 class UserListView(ListView):
     template_name = 'users.html'
-    model = User
+    model = CustomUser
     context_object_name = 'users'
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'user_create.html'
-    model = User
+    model = CustomUser
     form_class = RegisterForm
     success_url = reverse_lazy('login')
     success_message = 'Пользователь успешно зарегистрирован'
@@ -46,7 +46,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'user_update.html'
-    model = User
+    model = CustomUser
     form_class = UserUpdateForm
     success_url = reverse_lazy('user_list')
     success_message = 'Пользователь успешно изменен'
@@ -63,7 +63,7 @@ class UserUpdateView(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
 
 class UserDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'user_delete.html'
-    model = User
+    model = CustomUser
     success_url = reverse_lazy('user_list')
 
     def form_valid(self, form):

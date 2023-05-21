@@ -11,7 +11,7 @@ class TaskFilter(django_filters.FilterSet):
 
     class Meta:
         model = Task
-        fields = ['status', 'label']
+        fields = ['status', 'label', 'executor']
 
     @property
     def qs(self):
